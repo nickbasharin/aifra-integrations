@@ -1,0 +1,8 @@
+# Replace these absolute paths after installing aifra@0.2.0-beta.1.
+[mcp_servers.aifra]
+command = "node"
+args = ["/absolute/path/to/project/node_modules/aifra/aifra.cjs", "mcp"]
+
+[mcp_servers.aifra.env]
+AI_DEPLOY_API_ORIGIN = "https://api.aifra.ru"
+AIFRA_PROJECT_ROOT = "/absolute/path/to/project"

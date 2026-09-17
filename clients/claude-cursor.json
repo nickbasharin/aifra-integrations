@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "aifra": {
+      "command": "node",
+      "args": ["/absolute/path/to/project/node_modules/aifra/aifra.cjs", "mcp"],
+      "env": {
+        "AI_DEPLOY_API_ORIGIN": "https://api.aifra.ru",
+        "AIFRA_PROJECT_ROOT": "/absolute/path/to/project"
+      }
+    }
+  }
+}
