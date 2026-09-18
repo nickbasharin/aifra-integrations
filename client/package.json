@@ -1,0 +1,43 @@
+{
+  "name": "aifra",
+  "version": "0.2.0-beta.2",
+  "description": "Temporary 48-hour static previews for coding agents. Local CLI/MCP uploads prebuilt files; no builds or backend execution.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "aifra": "aifra.cjs"
+  },
+  "exports": {
+    "./sdk": {
+      "types": "./sdk.d.ts",
+      "import": "./sdk.mjs"
+    }
+  },
+  "files": [
+    "aifra.cjs",
+    "sdk.mjs",
+    "README.md",
+    "sdk.d.ts",
+    "THIRD_PARTY_NOTICES.txt",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "keywords": [
+    "mcp",
+    "static-preview",
+    "coding-agents",
+    "aifra"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "tag": "beta",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "mcpName": "io.github.nickbasharin/aifra",
+  "homepage": "https://aifra.ru",
+  "bugs": {
+    "email": "support@aifra.ru"
+  }
+}

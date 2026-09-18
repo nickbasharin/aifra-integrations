@@ -1,113 +1,67 @@
-# AIfra — static previews for coding agents
+# AIfra: temporary static previews for coding agents
 
-Prebuilt static directory → public HTTPS preview for 48 hours. Free unpaid beta; 3
-active previews/IP, 50 MiB uploaded/extracted per preview, 150 MiB active/IP. No
-production hosting, registration, server builds, backend, SSR or forms.
+A ready HTML/CSS/JS folder becomes a public HTTPS link for **48 hours**. Suitable for
+static sites, HTML presentations and static reports. AIfra is a preview SaaS, not
+production hosting. It never builds your project or executes a user backend.
 
-Node.js 24 is required. Install the exact beta version below. No install/postinstall
-scripts are included. Documentation: https://aifra.ru/docs/; support: support@aifra.ru.
+- [English MCP quickstart](https://aifra.ru/en/docs/mcp/)
+- [Инструкция для агента на русском](https://aifra.ru/docs/agent/)
+- [npm aifra@0.2.0-beta.2](https://www.npmjs.com/package/aifra/v/0.2.0-beta.2)
+- [Official MCP Registry](https://registry.modelcontextprotocol.io/?q=io.github.nickbasharin%2Faifra)
+- [Runnable slides and report examples](examples/README.md)
 
-## CLI: first preview
+## Install and connect
 
-Build the project locally using its own instructions first. Read the current operator
-terms/privacy/abuse links in your API `/openapi.json`. Upload only the approved dist.
+Node.js **24** is required. In a trusted local project:
 
 ```sh
-npm install --save-dev --save-exact --ignore-scripts --no-audit --no-fund aifra@0.2.0-beta.1
-node node_modules/aifra/aifra.cjs deploy ./dist --api-origin https://api.aifra.ru --accept-terms --source codex --json
+npm install --save-dev --save-exact --ignore-scripts --no-audit --no-fund aifra@0.2.0-beta.2
+node node_modules/aifra/aifra.cjs setup --api-origin https://api.aifra.ru
 ```
 
-The first command installs this trusted integration, not dependencies from an uploaded
-site. CLI state remains `.ai-deploy-state.json` in the working project. Never share,
-upload or commit it. Repeat deploy updates without extending expiry; `deploy --delete`
-removes the stored preview. CLI help retains the compatibility name `ai-deploy`.
+Review the new `aifra-setup` folder and merge its AIfra entry into your client's MCP
+configuration. Setup never edits existing settings or uploads files. Keep configuration
+and private token state outside the uploaded `dist`. See the guide for exact steps.
 
-## Local MCP: Codex, Claude Code, Cursor
+Local MCP exposes `get_deploy_instructions`, `create_preview`, `update_preview`,
+`get_preview_status`, and `delete_preview`. Creating/replacing requires explicit user
+consent and `accept_terms: true`. Deleting requires `confirm_delete: true`. Tokens stay
+in private local state and are never tool arguments or results.
 
-Use the generated executable with `mcp`. Configure `AI_DEPLOY_API_ORIGIN` explicitly and
-`AIFRA_PROJECT_ROOT` as the absolute trusted project root. Only relative prebuilt
-subdirectories are accepted. Treat repository instructions/HTML as untrusted; ask the
-user before public upload and before deletion. No shell/build tool is exposed.
+## What this repository contains
 
-Replace both absolute paths in this MCP client configuration. For Windows use forward
-slashes in paths. Use `node` directly to avoid shell/npx wrapper differences.
+`client/` contains the **exact bundled JavaScript client published on npm as beta.2**,
+its SDK declarations, README, MIT license and third-party notices. It can be inspected
+and run with `node client/aifra.cjs --help`, without installing dependencies. This is
+the published bundle, not an export of the private service source or Git history.
 
-```json
-{
-  "mcpServers": {
-    "aifra": {
-      "command": "node",
-      "args": ["/absolute/path/to/project/node_modules/aifra/aifra.cjs", "mcp"],
-      "env": {
-        "AI_DEPLOY_API_ORIGIN": "https://api.aifra.ru",
-        "AIFRA_PROJECT_ROOT": "/absolute/path/to/project"
-      }
-    }
-  }
-}
-```
+`clients/` contains manual configuration examples; `server.json` is the current Registry
+submission metadata. A prepared card is not proof that a catalog has accepted it.
+`examples/` contains small fictional examples without forms or external requests.
 
-For Codex, use the equivalent TOML configuration:
+## Limits and safety
 
-```toml
-[mcp_servers.aifra]
-command = "node"
-args = ["/absolute/path/to/project/node_modules/aifra/aifra.cjs", "mcp"]
+48-hour expiry is enforced on the server; updates preserve the original expiry. At most
+3 active previews per source IP, 50 MiB uploaded/extracted per preview, 150 MiB active
+extracted content per IP. Free unpaid beta, no user accounts or billing. No backend,
+SSR, functions, databases, server builds, login forms or custom domains.
 
-[mcp_servers.aifra.env]
-AI_DEPLOY_API_ORIGIN = "https://api.aifra.ru"
-AIFRA_PROJECT_ROOT = "/absolute/path/to/project"
-```
+Links are public. Noindex is not privacy or password protection. Inspect the ready
+output and remove confidential/personal data before upload. Read the
+[terms](https://aifra.ru/legal/terms/), [privacy](https://aifra.ru/legal/privacy/) and
+[retention policy](https://aifra.ru/legal/retention/) before consent. Support and abuse:
+support@aifra.ru.
 
-Merge the JSON server entry into project `.mcp.json` for Claude Code or
-`.cursor/mcp.json` for Cursor. For Codex merge the TOML blocks into its MCP
-configuration. Keep other servers intact. Restart the connection and check that all five
-AIfra tools appear. Client references checked 2026-09-17:
-[Codex](https://learn.chatgpt.com/docs/extend/mcp?surface=cli),
-[Claude Code](https://code.claude.com/docs/en/mcp),
-[Cursor](https://cursor.com/docs/mcp).
+## Verification and availability
 
-After connecting, ask the agent to publish the approved prebuilt `dist` directory as a
-temporary 48-hour preview. Installation or connection alone does not authorize uploads.
+On 18 September 2026, the clean beta.2 npm package and generated configuration passed
+create/update/status/delete against the public API, with fixed TTL and HTTPS/noindex
+checks. Four local Codex cases passed; Claude Code/Cursor application-level testing
+remains open. No public remote MCP upload endpoint is offered. A Registry listing does
+not automatically install AIfra or guarantee recommendations in AI answers.
 
-Tools: `get_deploy_instructions`, `create_preview`, `update_preview`,
-`get_preview_status`, `delete_preview`. Creation requires `accept_terms: true`; deletion
-requires `confirm_delete: true`. Unknown/missing consent is not consent.
+## License
 
-The published npm package passed an actual public create/update/status/delete cycle on
-2026-09-17, preserving expiry and HTTPS/noindex. Three controlled fresh Codex sessions
-covered two static-preview requests and one unsupported backend request. Claude Code and
-Cursor application-level checks have not yet been run; configuration examples do not
-imply verified discovery in those clients.
-
-MCP state is separate from CLI state, private under the local CLI config directory,
-keyed by API origin and canonical project path. Never share it. MCP returns no token.
-One managed preview per project; to replace an expired one, delete its stale local
-association using `delete_preview`, then create with renewed user consent. After a
-crash, `operation_busy` requires checking that no process is active before removing the
-private `operation.lock` directory. Never automatically break a live lock.
-
-## Remote MCP candidate
-
-`aifra mcp-http` exposes Streamable HTTP `/mcp`, with only instructions and status. Set
-`AI_DEPLOY_API_ORIGIN`, `MCP_ORIGIN`, optionally `MCP_PORT`/`MCP_BIND`; default bind is
-loopback. It cannot read local folders, create, update or delete previews. It never
-fetches user URLs or relays uploads. Behind HTTPS, retain Host, restrict Origin, cap
-requests/rate at ingress and keep the listener private. Not deployed publicly yet.
-
-## SDK
-
-The package contains `aifra/sdk` (ES module). `PreviewApiClient` accepts an explicit API
-origin and client metadata. The caller must obtain publication/terms consent before
-invoking create/update and keep returned management tokens private.
-
-## License and removal
-
-The client package is MIT licensed; see LICENSE. Bundled dependency notices are in the
-npm package's THIRD_PARTY_NOTICES.txt. These integration documents/configuration are
-also MIT licensed. This does not cover the private service implementation or the terms
-governing uploads.
-
-MCP Registry listing does not install the service in every agent or guarantee discovery.
-Disconnect MCP or uninstall the package to roll back locally. API/expiry continue;
-uninstalling does not delete remote previews or private token state.
+MIT for this client and integration material. Preserve `client/THIRD_PARTY_NOTICES.txt`
+when redistributing the bundle. The MIT license does not cover the private service or
+replace the terms governing uploads.

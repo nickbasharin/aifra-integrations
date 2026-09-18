@@ -1,0 +1,42 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  background: #f4f7fb;
+  color: #172439;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 50rem;
+  margin: auto;
+  padding: clamp(1.25rem, 5vw, 4rem);
+}
+h1 {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 1.15;
+}
+p {
+  max-width: 65ch;
+  line-height: 1.65;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 2rem;
+}
+caption {
+  text-align: left;
+  font-weight: 700;
+  padding-bottom: 0.7rem;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.75rem;
+  border: 1px solid #a8b4c5;
+  overflow-wrap: anywhere;
+}
+thead {
+  background: #dfeafa;
+}

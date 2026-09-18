@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Два слайда — пример AIfra</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./slides.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <p>ПРИМЕР / HTML-ПРЕЗЕНТАЦИЯ</p>
+      <h1>Покажите идею по ссылке</h1>
+      <section data-slide>
+        <h2>01. Готовые файлы</h2>
+        <p>
+          Эта презентация состоит из HTML, CSS и JavaScript. Всё работает в браузере.
+        </p>
+      </section>
+      <section data-slide hidden>
+        <h2>02. Временный просмотр</h2>
+        <p>
+          AIfra принимает готовую папку и выдаёт HTTPS-превью на 48 часов. Исходные
+          файлы сохраняйте у себя.
+        </p>
+      </section>
+      <button type="button" id="next">Следующий слайд</button>
+      <p id="position" role="status" aria-live="polite">Слайд 1 из 2</p>
+      <p>
+        Это учебный пример, а не презентация с данными пользователей. Клавиши ← и →
+        также переключают слайды.
+      </p>
+      <noscript
+        >Для переключения слайдов включите JavaScript. Второй слайд объясняет срок
+        preview: 48 часов.</noscript
+      >
+    </main>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-# Replace these absolute paths after installing aifra@0.2.0-beta.1.
+# Prefer `aifra setup` after installing aifra@0.2.0-beta.2, or replace these paths.
 [mcp_servers.aifra]
 command = "node"
 args = ["/absolute/path/to/project/node_modules/aifra/aifra.cjs", "mcp"]
