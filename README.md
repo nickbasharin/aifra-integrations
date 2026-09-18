@@ -10,7 +10,26 @@ production hosting. It never builds your project or executes a user backend.
 - [Official MCP Registry](https://registry.modelcontextprotocol.io/?q=io.github.nickbasharin%2Faifra)
 - [Runnable slides and report examples](examples/README.md)
 
-## Install and connect
+## Connect from a web chat
+
+Remote MCP: **https://api.aifra.ru/mcp** — Streamable HTTP, no authentication. No AIfra
+account, existing hosted project or API key is needed for a new preview. Add the
+endpoint in a client that supports custom remote MCP; no npm installation is needed. See
+the [ChatGPT / Claude walkthrough](https://aifra.ru/docs/chat/).
+
+Six tools: get_deploy_instructions, create_preview, update_preview, delete_preview,
+get_operation_status and get_preview_status. After explicit terms acceptance,
+create/update/delete prepare an operation and return approval_url. The user opens it and
+confirms in their browser; the agent must never confirm on their behalf. Poll
+get_operation_status for the actual result. Pending is not published.
+
+Pass static file contents in files (up to 1 MiB total), or archive_base64 (up to 50 MiB
+decoded ZIP). A chat-local path is not an upload; provider URL downloads are disabled.
+Unconfirmed files expire after 10 minutes, operation metadata after one hour, with
+cleanup on the next worker pass. Management keys stay in the approving browser; use that
+browser for updates and deletion. Do not retry uncertain operations blindly.
+
+## Install and connect locally
 
 Node.js **24** is required. In a trusted local project:
 
@@ -35,9 +54,10 @@ its SDK declarations, README, MIT license and third-party notices. It can be ins
 and run with `node client/aifra.cjs --help`, without installing dependencies. This is
 the published bundle, not an export of the private service source or Git history.
 
-`clients/` contains manual configuration examples; `server.json` is the current Registry
-submission metadata. A prepared card is not proof that a catalog has accepted it.
-`examples/` contains small fictional examples without forms or external requests.
+`clients/` contains manual configuration examples; `server.json` is Registry submission
+metadata (metadata version beta.3, npm client version beta.2). A prepared card is not
+proof that a catalog has accepted it. `examples/` contains small fictional examples
+without forms or external requests.
 
 ## Limits and safety
 
@@ -57,8 +77,10 @@ support@aifra.ru.
 On 18 September 2026, the clean beta.2 npm package and generated configuration passed
 create/update/status/delete against the public API, with fixed TTL and HTTPS/noindex
 checks. Four local Codex cases passed; Claude Code/Cursor application-level testing
-remains open. No public remote MCP upload endpoint is offered. A Registry listing does
-not automatically install AIfra or guarantee recommendations in AI answers.
+remains open. The public remote endpoint passed SDK and desktop/mobile browser lifecycle
+checks. The owner reported a successful ChatGPT connector publication; Claude consumer
+UI verification remains open. A Registry listing does not automatically install AIfra or
+guarantee recommendations in AI answers.
 
 ## License
 
