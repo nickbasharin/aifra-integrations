@@ -25,9 +25,15 @@ get_operation_status for the actual result. Pending is not published.
 
 Pass static file contents in files (up to 1 MiB total), or archive_base64 (up to 50 MiB
 decoded ZIP). A chat-local path is not an upload; provider URL downloads are disabled.
-Unconfirmed files expire after 10 minutes, operation metadata after one hour, with
-cleanup on the next worker pass. Management keys stay in the approving browser; use that
-browser for updates and deletion. Do not retry uncertain operations blindly.
+Unconfirmed files expire after 2 hours, operation metadata one hour after completion or
+approval expiry, with cleanup on the next worker pass. Management keys stay in the
+approving browser; use that browser for updates and deletion. Do not retry uncertain
+operations blindly.
+
+On the confirmation page, an optional public name can replace the random viewer URL. Use
+3–48 Latin letters, digits and inner hyphens; leave blank for the usual random URL. If
+the name is unavailable, change it without uploading again. Names are never reissued
+after deletion, and do not change the isolated content origin or the 48-hour lifetime.
 
 ## Install and connect locally
 
